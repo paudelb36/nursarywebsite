@@ -37,7 +37,8 @@ Import the database:
 
 ### Contributing
 If you would like to contribute to this project, feel free to fork the repository and submit pull requests.
+Make sure to replace `https://github.com/paudelb36/nurserywebsite.git` with the actual URL of your GitHub repository. Additionally, if your database file has a different name or format, adjust the instructions accordingly.
 
 # Happy coding!
 
-Make sure to replace `https://github.com/paudelb36/nurserywebsite.git` with the actual URL of your GitHub repository. Additionally, if your database file has a different name or format, adjust the instructions accordingly.
+
