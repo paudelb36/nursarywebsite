@@ -1,0 +1,837 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+  --green: #12900d;
+  --red: #c0392b;
+  --orange: #12900d;
+  --black: #333;
+  --white: #fff;
+  --light-color: #666;
+  --light-white: #ccc;
+  --light-bg: #f5f5f5;
+  --border: 0.2rem solid var(--black);
+  --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+* {
+  font-family: "roboto";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s linear;
+}
+
+*::selection {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+*::-webkit-scrollbar {
+  height: 0.5rem;
+  width: 1rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--green);
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+body {
+  background: var(--light-bg);
+}
+
+section {
+  padding: 3rem 2rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--black);
+  text-transform: uppercase;
+  font-size: 3rem;
+}
+
+.btn,
+.delete-btn,
+.option-btn {
+  display: inline-block;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.8rem;
+  color: var(--white);
+  cursor: pointer;
+  padding: 1rem 3rem;
+  text-transform: capitalize;
+}
+.view-details-btn {
+  display: inline-block;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  font-size: 1.8rem;
+  color: var(--red);
+  cursor: pointer;
+  padding: 1rem 3rem;
+  text-transform: capitalize;
+}
+
+.message {
+  position: sticky;
+  top: 0;
+  margin: 0 auto;
+  max-width: 40rem;
+  background-color: var(--light-bg);
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  gap: 1.5rem;
+  z-index: 10000;
+  justify-content: space-between;
+}
+
+.message span {
+  color: var(--black);
+  font-size: 2rem;
+}
+
+.message i {
+  font-size: 2.5rem;
+  color: var(--red);
+  cursor: pointer;
+}
+
+.message i:hover {
+  transform: rotate(90deg);
+}
+
+.empty {
+  padding: 1.5rem;
+  font-size: 2rem;
+  color: var(--red);
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  text-transform: capitalize;
+}
+
+.btn {
+  background-color: var(--green);
+}
+
+.delete-btn {
+  background-color: var(--red);
+}
+
+.option-btn {
+  background-color: var(--orange);
+}
+
+.btn:hover,
+.delete-btn:hover,
+.option-btn:hover {
+  background-color: var(--black);
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateY(1rem);
+  }
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+}
+
+.header .flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.header .flex .account-box {
+  position: absolute;
+  top: 120%;
+  right: 2rem;
+  width: 33rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  background-color: var(--white);
+  padding: 2rem;
+  text-align: center;
+  border: var(--border);
+  display: none;
+  animation: fadeIn 0.2s linear;
+}
+
+.header .flex .account-box.active {
+  display: inline-block;
+}
+
+.header .flex .account-box p {
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  color: var(--light-color);
+  line-height: 1.5;
+}
+
+.header .flex .account-box p span {
+  color: var(--green);
+}
+
+.header .flex .account-box div {
+  font-size: 2rem;
+  margin-top: 2rem;
+  color: var(--light-color);
+}
+
+.header .flex .account-box div a {
+  color: var(--orange);
+}
+
+.header .flex .account-box div a:hover {
+  text-decoration: underline;
+}
+
+.header .flex .icons div {
+  font-size: 2.5rem;
+  margin-left: 1.7rem;
+  cursor: pointer;
+  color: var(--black);
+}
+
+.header .flex .icons div:hover {
+  color: var(--green);
+}
+
+.header .flex .navbar a {
+  margin: 0 1rem;
+  font-size: 2rem;
+  color: var(--light-color);
+}
+
+.header .flex .navbar a:hover {
+  text-decoration: underline;
+  color: var(--green);
+}
+
+.header .flex .logo {
+  font-size: 2.5rem;
+  color: var(--black);
+}
+
+.header .flex .logo span {
+  color: var(--green);
+}
+
+#menu-btn {
+  display: none;
+}
+
+.dashboard .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+  gap: 1.5rem;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard .box-container .box {
+  text-align: center;
+  border: var(--border);
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.dashboard .box-container .box h3 {
+  font-size: 4.5rem;
+  color: var(--black);
+}
+
+.dashboard .box-container .box p {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--light-bg);
+  color: var(--light-color);
+  border: var(--border);
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+.add-products,
+.show-products {
+  padding: 2rem 2rem;
+  margin-top: 0.2rem; /* Reduce the margin-top */
+}
+.add-products form {
+  max-width: 40rem;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  border: var(--border);
+  padding: 1.5rem;
+  text-align: center;
+  margin: 0 auto;
+  box-shadow: var(--box-shadow);
+}
+
+.add-products form h3 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+.add-products form .box {
+  width: 100%;
+  margin: 0.8rem 0;
+  font-size: 1.6rem;
+  color: var(--black);
+  border-radius: 0.5rem;
+  background-color: var(--light-bg);
+  padding: 1rem 1.2rem;
+  border: var(--border);
+}
+
+.add-products form textarea {
+  height: 10rem;
+  resize: none;
+}
+
+
+
+.show-products .box-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(33rem, 1fr));
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.show-products .box-container .box {
+  background-color: var(--white);
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.show-products .box-container .box .image {
+  height: 30rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.show-products .box-container .box .price {
+  background-color: var(--green);
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  border-radius: 0.5rem;
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+  z-index: 1;
+}
+
+.show-products .box-container .box .name {
+  margin: 4rem 0 1rem 0;
+  font-size: 2rem;
+  color: var(--black);
+}
+
+.show-products .box-container .box .details {
+  line-height: 1.5;
+  color: var(--light-color);
+  font-size: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.update-product form {
+  max-width: 50rem;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  border: var(--border);
+  padding: 2rem;
+  text-align: center;
+  margin: 0 auto;
+  box-shadow: var(--box-shadow);
+}
+
+.update-product form h3 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+.update-product form .box {
+  width: 100%;
+  margin: 1rem 0;
+  font-size: 1.8rem;
+  color: var(--black);
+  border-radius: 0.5rem;
+  background-color: var(--light-bg);
+  padding: 1.2rem 1.4rem;
+  border: var(--border);
+}
+
+.update-product form textarea {
+  height: 25rem;
+  resize: none;
+}
+
+.update-product .image {
+  height: 30rem;
+  border: var(--border);
+  border-radius: 0.5rem;
+}
+
+/* placed order css code starts */
+.placed-orders .order-table {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--white);
+}
+
+.placed-orders .order-table th,
+.placed-orders .order-table td {
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.placed-orders .order-table th {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.placed-orders .order-table td span {
+  color: var(--green);
+}
+
+.placed-orders .order-table form {
+  text-align: center;
+}
+
+.placed-orders .order-table form select {
+  width: 100%;
+  max-width: 10rem; /* Limit the width of the select input */
+  padding: 0.8rem 1rem;
+  font-size: 1.6rem;
+  color: var(--black);
+  border: var(--border);
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.placed-orders .order-table .option-btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.6rem;
+  background-color: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.placed-orders .order-table .delete-btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.6rem;
+  background-color: var(
+    --red
+  ); /* Assuming you have a variable for the red color */
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/* placed order css code ends */
+
+/* .users-table css code */
+.users-table {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--white);
+}
+
+.users-table th,
+.users-table td {
+  padding: 1.5rem;
+  font-size: 1.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.users-table th {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+.users-table td span {
+  color: var(--green);
+}
+
+.users-table form {
+  text-align: center;
+}
+
+.users-table form select {
+  width: 100%;
+  max-width: 10rem; /* Limit the width of the select input */
+  padding: 0.8rem 1rem;
+  font-size: 1.6rem;
+  color: var(--black);
+  border: var(--border);
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.users-table .option-btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.6rem;
+  background-color: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.users-table .delete-btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.6rem;
+  background-color: var(
+    --red
+  ); /* Assuming you have a variable for the red color */
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/* Products table css code */
+section.show-products {
+  width: 100%;
+  margin: 0 auto;
+}
+
+table.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--white);
+  margin-top: 20px;
+}
+
+table.products-table th,
+table.products-table td {
+  padding: 1rem;
+  font-size: 1.6rem;
+  text-align: left;
+  border-bottom: 1px solid var(--light-color);
+}
+
+table.products-table th {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+table.products-table td span {
+  color: var(--green);
+}
+
+table.products-table form {
+  text-align: center;
+}
+
+table.products-table form select {
+  width: 100%;
+  max-width: 10rem;
+  padding: 0.8rem 1rem;
+  font-size: 1.6rem;
+  color: var(--black);
+  border: var(--border);
+  border-radius: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+table.products-table .option-btn,
+table.products-table .delete-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+table.products-table .option-btn:hover,
+table.products-table .delete-btn:hover {
+  background-color: var(--green);
+  color: var(--white);
+}
+
+table.products-table td img {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+}
+/* Products table css code ends */
+
+.messages .box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 33rem);
+  gap: 1.5rem;
+  align-items: flex-start;
+  max-width: 40rem;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.messages .box-container .box {
+  padding: 2rem;
+  border: var(--border);
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  border-radius: 0.5rem;
+}
+
+.messages .box-container .box p {
+  font-size: 2rem;
+  color: var(--light-color);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.messages .box-container .box p span {
+  color: var(--green);
+}
+
+/* Admin Order Details CSS */
+.order-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.order-details .order-container-1,
+.order-details .order-container-2 {
+  flex-basis: calc(50% - 1rem);
+  flex: 1;
+  min-width: 0;
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+}
+
+.order-details .order-container-1 .order-info {
+  margin: 1rem 0;
+}
+
+.order-details .order-container-1 .order-info p {
+  margin: 0.5rem 0;
+  font-size: 2rem;
+  line-height: 1.5;
+  color: var(--light-color);
+}
+
+.order-details .order-container-1 .order-info strong {
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
+.order-details .order-container-1 .update-form {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+.order-details .order-container-1 .update-form h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.order-details .order-container-1 .update-form form {
+  display: flex;
+  align-items: center;
+}
+
+.order-details .order-container-1 .update-form label {
+  font-size: 1.6rem;
+  color: var(--dark-color);
+  margin-right: 1rem;
+}
+
+.order-details .order-container-1 .update-form select {
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  border: 1px solid var(--light-color);
+  border-radius: 0.3rem;
+}
+
+.order-details .order-container-1 .update-form button {
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  background-color: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.order-details .order-container-1 .update-form button:hover {
+  background-color: var(--black);
+}
+
+.order-details .order-container-1 .delete-btn {
+  margin-top: 1rem;
+}
+
+.order-details .order-container-2 {
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+}
+
+.order-details .order-container-2 h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.order-details .order-container-2 .product-table th,
+.order-details .order-container-2 .product-table td {
+  padding: 1rem;
+  font-size: 1.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--light-color);
+}
+.product-image {
+  width: 50px; /* Adjust the width as needed */
+  height: auto; /* Automatically adjust height to maintain aspect ratio */
+}
+
+
+
+/* Media Query for Responsiveness */
+@media screen and (max-width: 768px) {
+  .order-details .order-container-1,
+  .order-details .order-container-2 {
+    flex-basis: 100%;
+  }
+
+  .order-details .order-container-1 .update-form form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-details .order-container-1 .update-form select {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* media queries  */
+
+@media (max-width: 991px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  #menu-btn {
+    display: inline-block;
+  }
+
+  .header .flex .navbar {
+    position: absolute;
+    top: 99%;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    border-top: var(--border);
+    border-bottom: var(--border);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+
+  .header .flex .navbar.active {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .header .flex .navbar a {
+    margin: 2rem;
+    display: block;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+
+  .title {
+    font-size: 3.5rem;
+  }
+}
