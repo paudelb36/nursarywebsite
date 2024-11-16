@@ -1,19 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 :root {
-  --green: #12900d;
-  --red: #c0392b;
-  --orange: #12900d;
+  
+  --orange: #D5B895;
+  --green: #C4A484;
+  --red: #b0301d;
   --black: #333;
   --white: #fff;
-  --light-color: #666;
-  --light-white: #ccc;
-  --light-bg: #f5f5f5;
+  --light-color: #888888;
+  --light-white: #e0e0e0;
+  --light-bg: #f1f1f1;
   --border: 0.2rem solid var(--black);
   --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 * {
-  font-family: "roboto";
+  font-family: "BarlowCondensed", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -365,52 +366,110 @@ section {
 
 /* header css ends here */
 
-.home {
-  min-height: 80vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("images/home-bg.png") no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Hero Slider Styles */
+.hero-slider {
   position: relative;
+  margin-bottom: 3rem;
 }
 
-.home .content {
+.slider-container {
+  position: relative;
+  max-width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
+  color: #fff;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
   z-index: 1;
+  background: rgba(0,0,0,0.4);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
 }
 
-.home .content h3 {
+.slide-content h2 {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--white); /* Use a contrasting color for text */
-  font-size: 4rem; /* Adjust the font size for better readability */
-  margin-bottom: 1rem; /* Add spacing between the heading and paragraph */
 }
 
-.home .content p {
-  max-width: 50rem;
-  margin: 0 auto; /* Center the paragraph */
-  line-height: 1.6;
-  font-size: 1.5rem; /* Adjust the font size for better readability */
-  color: var(--light-color);
+.slide-content p {
+  font-size: 2.2rem;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
-.home .btn {
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 1rem;
+  color: white;
+  font-size: 2rem;
+  background: rgba(0,0,0,0.3);
+  transition: 0.3s ease;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+.prev:hover, .next:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.dots {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
   display: inline-block;
-  margin-top: 1.5rem; /* Add spacing between the paragraph and button */
-  padding: 0.8rem 2.5rem; /* Increase button padding for a more prominent appearance */
-  font-size: 1.3rem; /* Adjust the font size for better readability */
-  text-transform: uppercase;
-  background-color: var(--primary-color);
-  color: var(--white);
-  border: none;
-  border-radius: 2rem; /* Round the button corners */
-  transition: background-color 0.3s ease-in-out;
+  transition: 0.3s ease;
 }
 
-.home .btn:hover {
-  background-color: var(--secondary-color);
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
 }
 
 
@@ -435,7 +494,7 @@ section {
 }
 
 .products .box-container .box .image {
-  height: 30rem;
+  height: 20rem;
   width: 100%;
   object-fit: cover;
 }
@@ -505,6 +564,237 @@ section {
   font-size: 1.8rem;
   color: var(--red);
   margin-top: 0.5rem;
+}
+/* Filter Button Styles */
+.filter-section {
+  position: relative;
+  padding: 20px;
+  text-align: right;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filter-btn {
+  background-color: #2980b9;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: #2573a7;
+}
+
+/* Filter Popup Styles */
+.filter-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 90%;
+  max-width: 400px;
+}
+
+.filter-popup.active {
+  display: block;
+}
+
+/* Overlay styles */
+.filter-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.filter-overlay.active {
+  display: block;
+}
+
+/* Filter Form Styles */
+.filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.filter-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-form select,
+.filter-form input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filter-form .price-range {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-form .price-range input {
+  flex: 1;
+}
+
+.apply-filter-btn {
+  background-color: #27ae60;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.apply-filter-btn:hover {
+  background-color: #219a52;
+}
+
+/* Close button styles */
+.close-filter-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-filter-btn:hover {
+  color: #333;
+}
+.dual-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.dual-slider label {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.dual-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #d3d3d3;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  margin: 10px 0;
+}
+
+.dual-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #00a2b8;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.slider-containers {
+  display: flex;
+  gap: 10px; /* Space between sliders */
+  align-items: center;
+}
+#priceRangeLabel {
+  margin-top: 10px;
+   font-weight: bold;
+
+}
+.price-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing between input fields */
+}
+
+.price-input-container span {
+  margin: 0 5px;
+}
+.color-circles {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 5px 0;
+  align-items: center;
+}
+
+.color-circle {
+  cursor: pointer;
+  position: relative;
+}
+
+.color-circle input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.color-circle .circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.color-circle input[type="radio"]:checked + .circle {
+  border: 2px solid #666;
+  transform: scale(1.1);
+}
+.color-options {
+  display: flex;
+  gap: 10px;
+}
+
+.color-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.color-circle.selected {
+  border-color: #007bff;
+  transform: scale(1.1);
 }
 
 .quick-view form {
@@ -641,8 +931,8 @@ section {
 }
 
 .reviews .box-container .box img {
-  height: 10rem;
-  width: 10rem;
+  height: 6rem;
+  width: 6rem;
   border-radius: 50%;
 }
 
@@ -800,7 +1090,7 @@ section {
 }
 
 .wishlist .wishlist-total {
-  max-width: 1200px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -842,8 +1132,8 @@ section {
 }
 
 .shopping-cart .box-container .box .image {
-  height: 35rem;
-  width: 100%;
+  height:20rem ;
+  width: 20rem;
   object-fit: cover;
 }
 
@@ -910,7 +1200,7 @@ section {
 }
 
 .shopping-cart .cart-total {
-  max-width: 1200px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;

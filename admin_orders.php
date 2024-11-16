@@ -25,40 +25,41 @@ if (isset($_GET['delete'])) {
    $fetchOrderItemsResult = mysqli_query($conn, $fetchOrderItemsQuery);
 
    if ($fetchOrderItemsResult) {
-       // Iterate through each order item and update product stock quantity
-       while ($orderItemData = mysqli_fetch_assoc($fetchOrderItemsResult)) {
-           $productId = $orderItemData['pid'];
-           $orderedQuantity = $orderItemData['quantity'];
+      // Iterate through each order item and update product stock quantity
+      while ($orderItemData = mysqli_fetch_assoc($fetchOrderItemsResult)) {
+         $productId = $orderItemData['pid'];
+         $orderedQuantity = $orderItemData['quantity'];
 
-           // Fetch the current stock quantity of the product
-           $fetchProductQuery = "SELECT stock_quantity FROM products WHERE id = '$productId'";
-           $fetchProductResult = mysqli_query($conn, $fetchProductQuery);
-           $productData = mysqli_fetch_assoc($fetchProductResult);
-           $currentStockQuantity = $productData['stock_quantity'];
+         // Fetch the current stock quantity of the product
+         $fetchProductQuery = "SELECT stock_quantity FROM products WHERE id = '$productId'";
+         $fetchProductResult = mysqli_query($conn, $fetchProductQuery);
+         $productData = mysqli_fetch_assoc($fetchProductResult);
+         $currentStockQuantity = $productData['stock_quantity'];
 
-           // Calculate the new stock quantity after adding the ordered quantity back
-           $newStockQuantity = $currentStockQuantity + $orderedQuantity;
+         // Calculate the new stock quantity after adding the ordered quantity back
+         $newStockQuantity = $currentStockQuantity + $orderedQuantity;
 
-           // Update the product stock in the products table
-           mysqli_query($conn, "UPDATE products SET stock_quantity = '$newStockQuantity' WHERE id = '$productId'");
-       }
+         // Update the product stock in the products table
+         mysqli_query($conn, "UPDATE products SET stock_quantity = '$newStockQuantity' WHERE id = '$productId'");
+      }
 
-       // Delete order items associated with the given order ID
-       mysqli_query($conn, "DELETE FROM order_items WHERE order_id = '$orderToDelete'");
+      // Delete order items associated with the given order ID
+      mysqli_query($conn, "DELETE FROM order_items WHERE order_id = '$orderToDelete'");
 
-       // Proceed to delete the order
-       $deleteQuery = "DELETE FROM orders WHERE id = '$orderToDelete'";
-       $deleteResult = mysqli_query($conn, $deleteQuery);
+      // Proceed to delete the order
+      $deleteQuery = "DELETE FROM orders WHERE id = '$orderToDelete'";
+      $deleteResult = mysqli_query($conn, $deleteQuery);
 
-       if ($deleteResult) {
-           // Redirect back to the orders page after deletion
-           header('Location: orders.php');
-           exit;
-       } else {
-           echo "Error deleting order: " . mysqli_error($conn);
-       }
+      if ($deleteResult) {
+         // Redirect back to the orders page after deletion
+         header('Location: admin_page.php');
+
+         exit;
+      } else {
+         echo "Error deleting order: " . mysqli_error($conn);
+      }
    } else {
-       echo "Error fetching order items: " . mysqli_error($conn);
+      echo "Error fetching order items: " . mysqli_error($conn);
    }
 }
 

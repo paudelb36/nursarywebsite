@@ -2,13 +2,6 @@
 
 @include 'config.php';
 
-// session_start();
-
-// $user_id = $_SESSION['user_id'];
-
-// if (!isset($user_id)) {
-//     header('location:login.php');
-// }
 if (isset($_POST['add_to_cart']) || isset($_POST['add_to_wishlist'])) {
     if (!isset($user_id)) {
         header('location:login.php');
@@ -94,47 +87,38 @@ if (isset($_POST['add_to_cart'])) {
             <input type="submit" class="btn" value="search" name="search_btn">
         </form>
     </section>
-
-    <section class="products" style="padding-top: 0;">
-
-        <div class="box-container">
-
-
-            <?php
-            @include 'config.php';
-            if (isset($_POST['search_btn'])) {
-                $search_box = mysqli_real_escape_string($conn, $_POST['search_box']);
-                $select_products = mysqli_query($conn, "SELECT * FROM `products` WHERE name LIKE '%{$search_box}%'") or die('query failed');
-                if (mysqli_num_rows($select_products) > 0) {
-                    while ($fetch_products = mysqli_fetch_assoc($select_products)) {
-            ?>
-                        <form action="" method="POST" class="box">
-                            <a href="view_page.php?pid=<?php echo $fetch_products['id']; ?>" class="fas fa-eye"></a>
-                            <div class="price">Rs.<?php echo $fetch_products['price']; ?>/-</div>
-                            <img src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="" class="image">
-                            <div class="name"><?php echo $fetch_products['name']; ?></div>
-                            <input type="number" name="product_quantity" value="1" min="0" class="qty">
-                            <input type="hidden" name="product_id" value="<?php echo $fetch_products['id']; ?>">
-                            <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
-                            <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
-                            <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
-                            <input type="submit" value="add to wishlist" name="add_to_wishlist" class="option-btn">
-                            <input type="submit" value="add to cart" name="add_to_cart" class="btn">
-                        </form>
-            <?php
-                    }
-                } else {
-                    echo '<p class="empty">no result found!</p>';
-                }
-            } else {
-                echo '<p class="empty">search something!</p>';
-            }
-            ?>
-
-        </div>
-
-    </section>
-
+      <section class="products">
+          <h1 class="title">Search Results</h1>
+          <div class="box-container">
+              <?php
+              @include 'config.php';
+              if (isset($_POST['search_btn'])) {
+                  $search_box = mysqli_real_escape_string($conn, $_POST['search_box']);
+                  $select_products = mysqli_query($conn, "SELECT * FROM `products` WHERE name LIKE '%{$search_box}%'") or die('query failed');
+                  if (mysqli_num_rows($select_products) > 0) {
+                      while ($fetch_products = mysqli_fetch_assoc($select_products)) {
+                          $product_id = $fetch_products['id'];
+                          $product_name = $fetch_products['name'];
+                          $product_price = $fetch_products['price'];
+                          $product_image = $fetch_products['image'];
+              ?>
+                      <div class="box">
+                          <img src="uploaded_img/<?php echo $product_image; ?>" alt="" class="image">
+                          <div class="name" style="font-weight: bolder;"><?php echo $product_name; ?></div>
+                          <div class="price">Rs.<?php echo $product_price; ?>/-</div>
+                          <a href="view_page.php?pid=<?php echo $product_id; ?>" class="btn">View Details</a>
+                      </div>
+              <?php
+                      }
+                  } else {
+                      echo '<p class="empty">No products found!</p>';
+                  }
+              } else {
+                  echo '<p class="empty">search something!</p>';
+              }
+              ?>
+          </div>
+      </section>
 
 
 

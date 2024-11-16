@@ -80,20 +80,11 @@ if(!isset($admin_id)){
 
       <div class="box">
          <?php
-            $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE user_type = 'user'") or die('query failed');
+            $select_users = mysqli_query($conn, "SELECT * FROM `users`") or die('query failed');
             $number_of_users = mysqli_num_rows($select_users);
          ?>
          <h3><?php echo $number_of_users; ?></h3>
          <p><a href="admin_users.php">normal users</a></p>
-      </div>
-
-      <div class="box">
-         <?php
-            $select_admin = mysqli_query($conn, "SELECT * FROM `users` WHERE user_type = 'admin'") or die('query failed');
-            $number_of_admin = mysqli_num_rows($select_admin);
-         ?>
-         <h3><?php echo $number_of_admin; ?></h3>
-         <p><a href="admin_users.php">admin users</a></p>
       </div>
 
       <div class="box">

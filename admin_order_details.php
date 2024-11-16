@@ -26,7 +26,20 @@ if (isset($_GET['order_id'])) {
         $order_details = mysqli_fetch_assoc($order_query);
 
         // Fetch order items associated with the given order ID from the order_items table
-        $select_order_items = mysqli_query($conn, "SELECT * FROM `order_items` WHERE order_id = '$order_id'") or die('Query failed');
+        // Update the query to select size and color
+        $select_order_items = mysqli_query($conn, "
+    SELECT 
+        oi.*,
+        p.image,
+        p.name as productsname,
+        ps.size,
+        pc.color
+    FROM `order_items` oi 
+    LEFT JOIN `products` p ON oi.pid = p.id
+    LEFT JOIN `product_sizes` ps ON oi.size_id = ps.id
+    LEFT JOIN `product_colors` pc ON oi.color_id = pc.id
+    WHERE oi.order_id = '$order_id'
+") or die('Query failed');
     } else {
         // Handle the case where the order does not exist
         $message[] = 'Order not found';
@@ -100,18 +113,22 @@ if (isset($_GET['order_id'])) {
                     <tr>
                         <th>Product Image</th>
                         <th>Product Name</th>
+                        <th>Size</th>
+                        <th>Color</th>
                         <th>Price</th>
                         <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $totalCost = 0; // Initialize the total cost
+                    $totalCost = 0;
                     if (mysqli_num_rows($select_order_items) > 0) {
                         while ($order_item = mysqli_fetch_assoc($select_order_items)) {
                             echo '<tr>';
                             echo '<td><img src="uploaded_img/' . $order_item['image'] . '" alt="" class="product-image"></td>';
                             echo '<td>' . $order_item['productsname'] . '</td>';
+                            echo '<td>' . ($order_item['size'] ?? 'N/A') . '</td>';
+                            echo '<td>' . ($order_item['color'] ? '<div class="color-circle" style="background-color: ' . $order_item['color'] . '; width: 25px; height: 25px; border-radius: 50%; margin: auto;"></div>' : 'N/A') . '</td>';
                             echo '<td>Rs.' . $order_item['price'] . '/-</td>';
                             echo '<td>' . $order_item['quantity'] . '</td>';
                             echo '</tr>';
@@ -119,20 +136,18 @@ if (isset($_GET['order_id'])) {
                             $totalCost += $itemTotal;
                         }
                     } else {
-                        echo '<tr><td colspan="4">No products found for this order.</td></tr>';
+                        echo '<tr><td colspan="6">No products found for this order.</td></tr>';
                     }
                     ?>
                 </tbody>
                 <tfoot>
-
                     <tr>
-                        <td colspan="3" class="text-right"><strong>Grand Total:</strong></td>
+                        <td colspan="5" class="text-right"><strong>Grand Total:</strong></td>
                         <td><strong>Rs.<?php echo $totalCost; ?>/-</strong></td>
                     </tr>
                 </tfoot>
             </table>
         </div>
-
 
     <?php else : ?>
         <p><?php echo $message[0]; ?></p>

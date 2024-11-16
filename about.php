@@ -4,11 +4,6 @@
 
 session_start();
 
-// $user_id = $_SESSION['user_id'];
-
-// if(!isset($user_id)){
-//    header('location:login.php');
-// }
 
 ?>
 
@@ -43,12 +38,12 @@ session_start();
         <div class="flex">
 
             <div class="image">
-                <img src="images/slide2.jpg" alt="">
+                <img src="images/aboutus1.jpg" alt="">
             </div>
 
             <div class="content">
                 <h3>why choose us?</h3>
-                <p align="justify" style="font-size:1.8rem">Embark on your gardening journey with confidence by choosing our Plant Nursery. We stand out as your ideal partner for several reasons. Our wide selection of healthy and vibrant plants is nurtured by experienced horticulturists who are passionate about their craft. We prioritize quality, ensuring that every plant you bring home has the potential to flourish. With expert advice and personalized assistance, we're here to guide you, whether you're a seasoned gardener or just starting.</p>
+                <p align="justify" style="font-size:1.8rem">At our clothing store, we believe in more than just selling clothes—we’re here to create a style journey for each customer. From the latest trends to timeless pieces, we focus on quality, comfort, and originality. Our commitment to sustainable fashion practices, exceptional customer service, and accessible prices makes us a top choice. We curate every item with care, aiming to inspire confidence and individuality with every wear. When you choose us, you’re choosing a brand that values authenticity, supports your unique style, and ensures you look and feel your best.</p>
                 <a href="shop.php" class="btn">shop now</a>
             </div>
 
@@ -58,12 +53,13 @@ session_start();
 
             <div class="content">
                 <h3>what we provide?</h3>
-                <p align="justify" style="font-size:1.8rem">At our Plant Nursery, we offer a diverse range of plants that cater to every gardening enthusiast. From ornamental blooms to lush greenery, our collection has something for everyone. Our knowledgeable staff is ready to share insights and recommendations, helping you choose the perfect plants for your space and preferences. Additionally, we provide gardening supplies, soil, and accessories to equip you with all you need for a successful gardening experience. Your journey to create a thriving garden begins with us.</p>
+                <p align="justify" style="font-size:1.8rem">We offer an extensive range of clothing for men and women, thoughtfully crafted to suit diverse tastes and occasions. From casual wear to formal attire, each collection brings together style, quality fabrics, and intricate detailing. Beyond clothing, our store provides a seamless shopping experience with user-friendly online browsing, secure payment options, and fast, reliable delivery. Our team is always ready to assist with personalized styling tips, size guidance, and a hassle-free return policy, making sure every purchase is a satisfying one. We’re here to cater to every need, making fashion fun, easy, and accessible.
+                </p>
                 <a href="contact.php" class="btn">contact us</a>
             </div>
 
             <div class="image">
-                <img src="images/slide1.jpg" alt="">
+                <img src="images/aboutus2.jpg" alt="">
             </div>
 
         </div>

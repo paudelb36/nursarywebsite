@@ -10,73 +10,7 @@ if (isset($_SESSION['user_id'])) {
    $user_id = $_SESSION['user_id'];
 }
 
-if (isset($_POST['add_to_wishlist'])) {
 
-   // Check if the user is logged in
-   if (!isset($_SESSION['user_id'])) {
-      // Redirect the user to the login page or show a message
-      header('Location: login.php');
-      exit();
-   }
-
-   $product_id = $_POST['product_id'];
-   $product_name = $_POST['product_name'];
-   $product_price = $_POST['product_price'];
-   $product_image = $_POST['product_image'];
-
-   $check_wishlist_numbers = mysqli_query($conn, "SELECT * FROM `wishlist` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
-
-   $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
-
-   if (mysqli_num_rows($check_wishlist_numbers) > 0) {
-      $message[] = 'already added to wishlist';
-   } elseif (mysqli_num_rows($check_cart_numbers) > 0) {
-      $message[] = 'already added to cart';
-   } else {
-      mysqli_query($conn, "INSERT INTO `wishlist`(user_id, pid, name, price, image) VALUES('$user_id', '$product_id', '$product_name', '$product_price', '$product_image')") or die('query failed');
-      $message[] = 'product added to wishlist';
-   }
-}
-
-if (isset($_POST['add_to_cart'])) {
-   $product_id = $_POST['product_id'];
-   $product_name = $_POST['product_name'];
-   $product_price = $_POST['product_price'];
-   $product_image = $_POST['product_image'];
-   $product_quantity = $_POST['product_quantity'];
-
-   $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
-
-   if (mysqli_num_rows($check_cart_numbers) > 0) {
-      $message[] = 'already added to cart';
-   } else {
-      $check_wishlist_numbers = mysqli_query($conn, "SELECT * FROM `wishlist` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
-
-      if (mysqli_num_rows($check_wishlist_numbers) > 0) {
-         mysqli_query($conn, "DELETE FROM `wishlist` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
-      }
-
-      // Fetch the current stock quantity of the product
-      $fetch_product = mysqli_query($conn, "SELECT stock_quantity FROM `products` WHERE id = '$product_id'") or die('query failed');
-      $product_data = mysqli_fetch_assoc($fetch_product);
-      $current_stock_quantity = $product_data['stock_quantity'];
-
-      if ($current_stock_quantity >= $product_quantity) {
-         // Update cart and product stock quantity
-         mysqli_query($conn, "INSERT INTO `cart`(user_id, pid, name, price, quantity, image) VALUES('$user_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
-
-         // Calculate the new stock quantity after subtracting the ordered quantity
-         $new_stock_quantity = $current_stock_quantity - $product_quantity;
-
-         // Update the product stock in the products table
-         mysqli_query($conn, "UPDATE products SET stock_quantity = '$new_stock_quantity' WHERE id = '$product_id'") or die('query failed');
-
-         $message[] = 'product added to cart';
-      } else {
-         $message[] = 'Ordered quantity exceeds available stock';
-      }
-   }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,75 +26,133 @@ if (isset($_POST['add_to_cart'])) {
 
    <!-- custom admin css file link  -->
    <link rel="stylesheet" href="css/style.css">
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+
+         let slideIndex = 1;
+         showSlides(slideIndex);
+
+         function changeSlide(n) {
+            showSlides(slideIndex += n);
+         }
+
+         function currentSlide(n) {
+            showSlides(slideIndex = n);
+         }
+
+         function showSlides(n) {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+
+            if (n > slides.length) {
+               slideIndex = 1
+            }
+            if (n < 1) {
+               slideIndex = slides.length
+            }
+
+            for (let i = 0; i < slides.length; i++) {
+               slides[i].style.display = "none";
+            }
+            for (let i = 0; i < dots.length; i++) {
+               dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+         }
+
+         // Auto slide
+         setInterval(() => {
+            changeSlide(1);
+         }, 5000);
+      });
+   </script>
 
 </head>
 
 <body>
-
    <?php @include 'header.php'; ?>
 
-   <!-- <section class="home">
+   <!-- Add this new slider section -->
+   <section class="hero-slider">
+      <div class="slider-container">
+         <div class="slide fade">
+            <img src="images/slider1.jpg" alt="Nursery Image 1">
+            <div class="slide-content">
+               <h2>Welcome to Wear It Store</h2>
+               <p>Discover your perfect style with our latest collections</p>
+            </div>
+         </div>
 
-      <div class="content">
-         <p><b>Find Your Perfect Plants for a Vibrant Garden</b></p>
-        
-         <a href="shop.php" class="btn">shop now</a>
+         <div class="slide fade">
+            <img src="images/slider2.jpg" alt="Nursery Image 2">
+            <div class="slide-content">
+               <h2>Premium Fashion Wear</h2>
+               <p>Elevate your wardrobe with trendsetting designs</p>
+            </div>
+         </div>
+
+         <div class="slide fade">
+            <img src="images/slider3.jpg" alt="Nursery Image 3">
+            <div class="slide-content">
+               <h2>Luxury & Comfort</h2>
+               <p>Where style meets comfort for every occasion</p>
+            </div>
+         </div>
+
+         <a class="prev" onclick="changeSlide(-1)">❮</a>
+         <a class="next" onclick="changeSlide(1)">❯</a>
       </div>
+      <div class="dots">
+         <span class="dot" onclick="currentSlide(1)"></span>
+         <span class="dot" onclick="currentSlide(2)"></span>
+         <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+   </section>
 
-   </section> -->
-
+   <?php // Fetch products from database
+   $select_products = mysqli_query($conn, "SELECT * FROM `products` LIMIT 4") or die('query failed');
+   ?>
+   <!-- Products Section -->
    <section class="products">
-
-      <h1 class="title">latest products</h1>
-
+      <h1 class="title">Latest Products</h1>
       <div class="box-container">
          <?php
-         $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
          if (mysqli_num_rows($select_products) > 0) {
             while ($fetch_products = mysqli_fetch_assoc($select_products)) {
                $product_id = $fetch_products['id'];
                $product_name = $fetch_products['name'];
                $product_price = $fetch_products['price'];
                $product_image = $fetch_products['image'];
-               $stock_quantity = $fetch_products['stock_quantity'];
-
-               // Check if the product is out of stock
-               $out_of_stock = $stock_quantity <= 0;
          ?>
-               <form action="" method="POST" class="box">
-                  <a href="view_page.php?pid=<?php echo $product_id; ?>" class="fas fa-eye"></a>
-                  <div class="price">Rs.<?php echo $product_price; ?>/-</div>
+               <div class="box">
                   <img src="uploaded_img/<?php echo $product_image; ?>" alt="" class="image">
-                  <div class="name"><?php echo $product_name; ?></div>
-                  <p class="stock-quantity">In Stock: <?php echo $stock_quantity; ?></p> <!-- Display stock quantity -->
-                  <input type="number" name="product_quantity" value="1" min="1" max="<?php echo $stock_quantity; ?>" class="qty">
-                  <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
-                  <input type="hidden" name="product_name" value="<?php echo $product_name; ?>">
-                  <input type="hidden" name="product_price" value="<?php echo $product_price; ?>">
-                  <input type="hidden" name="product_image" value="<?php echo $product_image; ?>">
-
-                  <!-- Display appropriate button based on stock availability -->
-                  <?php if ($out_of_stock) { ?>
-                     <p class="out-of-stock">Out of Stock</p>
-                  <?php } else { ?>
-                     <input type="submit" value="add to wishlist" name="add_to_wishlist" class="option-btn">
-                     <input type="submit" value="add to cart" name="add_to_cart" class="btn">
-                  <?php } ?>
-               </form>
+                  <div class="name" style="font-weight: bolder;"><?php echo $product_name; ?></div>
+                  <div class="price">Rs.<?php echo $product_price; ?>/-</div>
+                  <a href="view_page.php?pid=<?php echo $product_id; ?>" class="btn">View Details</a>
+               </div>
          <?php
             }
          } else {
-            echo '<p class="empty">no products added yet!</p>';
+            echo '<p class="empty">No products available!</p>';
          }
          ?>
       </div>
-
-
-      <div class="more-btn">
-         <a href="shop.php" class="option-btn">load more</a>
-      </div>
-
    </section>
+
+   <script>
+      function updateColorSelection(checkbox) {
+         const circle = checkbox.nextElementSibling;
+         if (checkbox.checked) {
+            circle.style.border = '2px solid red';
+            circle.style.transform = 'scale(1.1)';
+         } else {
+            circle.style.border = '2px solid #e9ecef';
+            circle.style.transform = 'scale(1)';
+         }
+      }
+   </script>
 
    <section class="home-contact">
 
